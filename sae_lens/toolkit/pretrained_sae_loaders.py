@@ -254,7 +254,7 @@ def connor_rob_hook_z_huggingface_loader(
     file_path = hf_hub_download(
         repo_id=repo_id, filename=folder_name, force_download=force_download
     )
-    weights = torch.load(file_path, map_location=device)
+    weights = torch.load(file_path, map_location=device, weights_only=True)
 
     return cfg_dict, weights, None
 
@@ -689,7 +689,7 @@ def deepseek_r1_sae_huggingface_loader(
     )
 
     # Load state dict
-    state_dict_loaded = torch.load(sae_path, map_location=device)
+    state_dict_loaded = torch.load(sae_path, map_location=device, weights_only=True)
 
     # Create config
     cfg_dict = get_deepseek_r1_config_from_hf(
@@ -761,7 +761,7 @@ def dictionary_learning_sae_huggingface_loader_1(
     encoder_path = hf_hub_download(
         repo_id=repo_id, filename=f"{folder_name}/ae.pt", force_download=force_download
     )
-    encoder = torch.load(encoder_path, map_location="cpu")
+    encoder = torch.load(encoder_path, map_location="cpu", weights_only=True)
 
     state_dict = {
         "W_enc": encoder["encoder.weight"].T,
